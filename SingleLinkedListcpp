@@ -1,0 +1,74 @@
+typedef struct tagNode{
+    int Info;
+    struct tagNode* pNext;
+}Node;
+
+typedef struct tagList{
+    Node* pHead;
+    Node* pTail;
+}LIST;
+
+void CreateList(LIST& l){
+    l.pHead = NULL;
+    l.pTail = NULL;
+}
+
+Node* CreateNode(int x){
+    Node* p;
+    p = new Node;
+    if(p == NULL) exit(1);
+    p->Info = x;
+    p->pNext = NULL;
+    return p;
+}
+
+void PrintList(LIST l){
+    Node* p;
+    p = l.pHead;
+    while(p != NULL){
+        cout << p->Info;
+        p = p->pNext;
+    }
+}
+
+Node* Search(LIST l, int x){
+    Node* p;
+    p = l.pHead;
+    while((p != NULL) && (p->Info != x))
+    p = p->pNext;
+    return p;
+}
+
+void AddHead(LIST& l, Node* p){
+    if(l.pHead == NULL){
+        l.pHead = p;
+        l.pTail = l.pHead;
+    }
+    else{
+        p->pNext = l.pHead;
+        l.pHead = p;
+    }
+}
+
+void AddTail(LIST &l, Node *p){
+    if (l.pHead == NULL){
+        l.pHead = p;
+        l.pTail = l.pHead;
+    }
+    else{
+        l.pTail->pNext = p;
+        l.pTail = p;
+    }
+}
+
+void RemoveTail(LIST& l){
+    Node* p;
+    int x;
+    if(l.pTail != NULL){
+        p = l.pTail;
+        x = p->Info;
+        l.pTail = l.pTail->pNext;
+        delete p;
+        if(l.pHead == NULL) l.pTail = NULL;
+    }
+}
